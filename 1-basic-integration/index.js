@@ -1,6 +1,7 @@
 // The LaunchDarkly Node Server SDK
 const LaunchDarkly = require("launchdarkly-node-server-sdk");
 exports.handler = async (event) => {
+  // initialize the SDK client with the SDK Key
   const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY);
   await client.waitForInitialization();
 
@@ -19,6 +20,7 @@ exports.handler = async (event) => {
   // which is helpful for debugging
   client.flush();
 
+  // format the response. All we're passing back, is the value of the flag
   const response = {
     statusCode: 200,
     body: JSON.stringify(exampleLDCall),

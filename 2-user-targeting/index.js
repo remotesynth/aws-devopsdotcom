@@ -7,6 +7,7 @@ exports.handler = async (event) => {
   const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY);
   await client.waitForInitialization();
 
+  // decrypting the JWT token
   const header = await jwt.verify(
     event.headers.Authorization,
     process.env.SECRET_KEY
