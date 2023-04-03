@@ -1,10 +1,11 @@
 // The LaunchDarkly Node Server SDK
 const LaunchDarkly = require("launchdarkly-node-server-sdk");
-exports.handler = async (event) => {
-  // initialize the SDK client with the SDK Key
-  const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY);
-  await client.waitForInitialization();
+// initialize the SDK client with the SDK Key
+const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY);
 
+exports.handler = async (event) => {
+  // make sure that the client is done initializing
+  await client.waitForInitialization();
   // we're passing in a generic user key
   const context = {
     kind: "user",

@@ -2,9 +2,10 @@
 const LaunchDarkly = require("launchdarkly-node-server-sdk");
 // for decrypting JWT tokens
 const jwt = require("jsonwebtoken");
+const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY);
 
 exports.handler = async (event) => {
-  const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY);
+  // make sure that the client is done initializing
   await client.waitForInitialization();
 
   // decrypting the JWT token
@@ -19,7 +20,7 @@ exports.handler = async (event) => {
     key: header.key,
   };
 
-  // if the user is in the internal users segemnt they
+  // if the user is in the internal users segment they
   // will get a different response, which could lead to
   // different code paths within the Lambda
   const exampleLDCall = await client.variation(

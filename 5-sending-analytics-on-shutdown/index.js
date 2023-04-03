@@ -7,20 +7,22 @@ const {
 // for decrypting JWT tokens
 const jwt = require("jsonwebtoken");
 
+// configure the store before the SDK client
+const store = DynamoDBFeatureStore(process.env.DYNAMODB_TABLE, {
+  cacheTTL: 30,
+});
+
+// useLdd launches the client in daemon mode where flag values come
+// from the data store (i.e. dynamodb)
+const options = {
+  featureStore: store,
+  useLdd: true,
+};
+
+const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY, options);
+
 exports.handler = async (event) => {
-  // configure the store before the SDK client
-  const store = DynamoDBFeatureStore(process.env.DYNAMODB_TABLE, {
-    cacheTTL: 30,
-  });
-
-  // useLdd launches the client in daemon mode where flag values come
-  // from the data store (i.e. dynamodb)
-  const options = {
-    featureStore: store,
-    useLdd: true,
-  };
-
-  const client = LaunchDarkly.init(process.env.LAUNCHDARKLY_SDK_KEY, options);
+  // make sure that the client is done initializing
   await client.waitForInitialization();
 
   // decrypt the JWT token to get the user key
