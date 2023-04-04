@@ -1,6 +1,6 @@
 # Using LaunchDarkly in AWS Serverless
 
-The examples here show how to integrate LaunchDarkly within AWS Serverless using Lamba and DynamoDB. They were presented as part of a webinar to DevOps.com on April 6, 2023. They contain the following examples:
+The examples here show how to integrate LaunchDarkly within AWS Serverless using Lamba and DynamoDB. They were presented as part of a webinar to DevOps.com on April 6, 2023. Each folder contains a version of the same Lambda implemented in CommonJS and in ESModule formats. They contain the following examples:
 
 0. The `lamda-layers` folder contains the layers used throughout the examples. Layers make it easier to add and manage a dependency like LaunchDarkly's SDKs across multiple Lambdas.
 1. The `basic-integration` shows how to add LaunchDarkly to a Lambda built with Node.js and get the value of a flag.
